@@ -1,0 +1,228 @@
+﻿@model politician_server.Models.UsersListViewModel
+@using politician_server.HtmlHelpers
+@using politician_server.Models
+@{
+    ViewBag.Title = "Игроки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Игроки 2</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.GroupsIdsString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupsNamesString)
+            </th>*@
+            <th>
+                Уровень
+            </th>
+            <th>
+                Псевдоним@*@Html.DisplayNameFor(model => model.Nick)*@
+            </th>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                Отчество
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telephone)
+            </th>*@
+            <th>
+                Почта
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Work)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deviz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parties)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PolitExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alcohol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Smoking)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Religions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExamPass)
+            </th>*@
+            <th>
+                Прогресс
+            </th>
+            <th>
+                Баллы
+            </th>
+            <th></th>
+        </tr>
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <script type="text/javascript">
+                @*(function ($) {*@
+
+                    $(document).ready(
+                                function () {
+                                    $('#FilterTerminalName').autocomplete({
+                                        source: function(request, response) {
+                                            $.ajax({
+                                                type: "POST",
+                                                contentType: "application/json; charset=utf-8",
+                                                url: "http://localhost:50193/TerminalMonitoring/GetListForAutoComplite",
+                                                data: "{ 'prefixText': '" + request.term + "', 'maxRows': '15' }",
+                                                dataType: "json",
+                                                async: false,
+                                                success: function(data) {
+                                                    console.log(data);
+                                                    response($.map(data, function (item) {
+                                                        return {
+                                                            label: item,
+                                                            value: item
+                                                        }
+                                                    }));
+                                                },
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                    alert(textStatus + ': ' + errorThrown);
+                                                }
+                                            });
+                                        },
+                                        minLength: 2,
+                                        select: function(event, ui) {
+                                            $(this).prev().val(ui.item.PersonId);
+                                        }
+                                    });
+                                })
+                @*}(jQuery))*@
+            </script>
+            <tr>
+                <th>
+                    @Html.Hidden("page", @Model.PagingInfo.CurrentPage)
+                    @Html.DropDownList("FilterUserStage", new SelectList((IEnumerable<Stage>)ViewBag.StageAll, "Id", "Name", "None"), new { @class = "form-control-ui-autocomplete-input" })
+                </th>
+                <th>
+                    @Html.TextBox("FilterUserNick", null, new { @class = "form-control-ui-autocomplete-input", @id = "FilterUserNick", @autocomplete = "off", @role = "textbox", @aria_autocomplete = "list", @aria_haspopup = "true" })
+                </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
+                <th>
+                    @Html.Hidden("page", @Model.PagingInfo.CurrentPage)
+                    @Html.DropDownList("FilterUserState", new SelectList((IEnumerable<Stage>)ViewBag.TaskStatesAll, "Id", "Name", "None"), new { @class = "form-control-ui-autocomplete-input" })
+                </th>
+                <th> </th>
+                <th> <input type="submit" value="Выбрать" class="btn btn-block btn-primary" style="text-align:center" /> </th>
+            </tr>
+        }
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Users)
+        {
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.GroupsIdsString)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GroupsNamesString)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Stage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nick)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Midname)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telephone)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Work)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deviz)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Parties)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolitExp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Alcohol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Smoking)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Religions)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamPass)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @if(item.State == DBHelper.Models.TaskStates.Проверка && item.Stage > 0)
+                {
+                    @Html.ActionLink("Начать проверку", "Exam", new { nick = item.Nick }) 
+                }
+                @*
+                                                                                           |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x, FilterUserStage = Request.Params["FilterUserStage"], FilterUserState = Request.Params["FilterUserState"], FilterUserNick = Request.Params["FilterUserNick"] }))
+</div>

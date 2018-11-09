@@ -1,0 +1,6 @@
+[10.29.2018 17:02:07] - ERROR MailConfirm: System.Net.WebException: Время ожидания операции истекло
+   в System.Net.WebClient.UploadValues(Uri address, String method, NameValueCollection data)
+   в System.Net.WebClient.UploadValues(String address, NameValueCollection data)
+   в Politician_client.Politician_client.MailConfirm(String Name) в E:\DropboxFolder\Dropbox (Личный)\Proj\Polit_GAME\Politician_client\Politician_client\Politician_client.cs:строка 136 +++ [   в System.Net.WebClient.UploadValues(Uri address, String method, NameValueCollection data)
+   в System.Net.WebClient.UploadValues(String address, NameValueCollection data)
+   в Politician_client.Politician_client.MailConfirm(String Name) в E:\DropboxFolder\Dropbox (Личный)\Proj\Polit_GAME\Politician_client\Politician_client\Politician_client.cs:строка 136]

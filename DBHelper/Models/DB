@@ -1,0 +1,173 @@
+CREATE SCHEMA IF NOT EXISTS `politician` ;
+
+DROP VIEW IF EXISTS `politician`.`users_rating`;
+
+DROP TABLE IF EXISTS `politician`.`users_files`;
+
+DROP TABLE IF EXISTS `politician`.`users_opponents`;
+
+DROP TABLE IF EXISTS `politician`.`users_history`;
+
+DROP TABLE IF EXISTS `politician`.`users`;
+
+DROP TABLE IF EXISTS `politician`.`admins`;
+
+CREATE TABLE IF NOT EXISTS `politician`.`admins` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `nickname` VARCHAR(150) NOT NULL,
+  `mail` VARCHAR(150) NOT NULL,
+  `pass` VARCHAR(32) NOT NULL,
+  UNIQUE INDEX `users_name_UNIQUE` (`nickname` ASC)
+);
+
+CREATE TABLE IF NOT EXISTS `politician`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `nickname` VARCHAR(150) NOT NULL,
+  `fname` VARCHAR(150) NOT NULL,
+  `lname` VARCHAR(150) NOT NULL,
+  `midname` VARCHAR(150) NOT NULL,
+  `city` VARCHAR(150) NOT NULL,
+  `telephone` VARCHAR(150) NOT NULL,
+  `mail` VARCHAR(150) NOT NULL,
+  `work` VARCHAR(150) NOT NULL,
+  `status` VARCHAR(150) NOT NULL,
+  `deviz` VARCHAR(3000) NOT NULL,
+  `parties` VARCHAR(150) NOT NULL,
+  `polit_exp` VARCHAR(150) NOT NULL,
+  `alcohol` BOOLEAN NOT NULL,
+  `smoking` BOOLEAN NOT NULL,
+  `female` BOOLEAN NOT NULL,
+  `religions` VARCHAR(150) NOT NULL,
+  `stage` INT NOT NULL DEFAULT 0,
+  `state` INT NOT NULL DEFAULT 1,  -- сразу на проверку почты
+  `exam_pass` VARCHAR(32),
+  `pass` VARCHAR(32) NOT NULL,
+  UNIQUE INDEX `users_name_UNIQUE` (`nickname`  ASC)
+);
+
+CREATE TABLE IF NOT EXISTS `politician`.`users_history` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `stage` INT NOT NULL,
+  `score` INT NOT NULL,
+  `id_user` INT NOT NULL,
+  `msg` TEXT NOT NULL,
+  FOREIGN KEY (`id_user`) REFERENCES `politician`.`users`(`id`),
+  UNIQUE INDEX `users_history_UNIQUE` (`id_user`, `stage`  ASC)
+);
+
+CREATE TABLE IF NOT EXISTS `politician`.`users_opponents` (
+  `id_user` INT NOT NULL,
+  `stage` INT NOT NULL,
+  `id_opponent` INT NOT NULL,
+  FOREIGN KEY (`id_user`) REFERENCES `politician`.`users`(`id`),
+  FOREIGN KEY (`id_opponent`) REFERENCES `politician`.`users`(`id`),
+  UNIQUE INDEX `users_opponents_UNIQUE` (`id_user`, `stage`, `id_opponent`  ASC)
+);
+
+CREATE TABLE IF NOT EXISTS  `politician`.`users_files` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_user` INT NOT NULL,
+  `stage` INT NOT NULL,
+  `path` VARCHAR( 1024 ) NOT NULL,
+  `name` VARCHAR( 256 ) NOT NULL,
+  `is_file` BOOLEAN NOT NULL,
+  `delete` BOOLEAN NOT NULL DEFAULT false,
+  FOREIGN KEY (`id_user`) REFERENCES `politician`.`users`(`id`), 
+  UNIQUE INDEX `files_id_user_stage_name_UNIQUE` (`id_user`, `stage`, `name`  ASC)
+);
+
+CREATE VIEW `politician`.`users_rating` AS
+select `u`.`id`, `u`.`nickname`, `u`.`female`, `u`.`fname`, `u`.`lname`, `u`.`midname`, `u`.`city`, `u`.`mail`, `u`.`stage`, `u`.`state`, sum(`score`) `reward`
+from `politician`.`users` AS `u`
+left Join `politician`.`users_history` AS `h` ON `u`.`id` = `h`.`id_user`
+group by `u`.`id`
+order by `reward` desc, `u`.`nickname` asc;
+
+INSERT INTO `politician`.`admins` (`id`, `nickname`, `mail`, `pass`) VALUES 
+('1', 'AutoAdmin', 'AutoAdmin@game.ru', '81dc9bdb52d04dc20036dbd8313ed055'),
+('2', 'Admin', 'Admin@game.ru', '81dc9bdb52d04dc20036dbd8313ed055');
+
+
+
+INSERT INTO `politician`.`users` (`id`, `nickname`, `fname`, `lname`, `midname`, `city`,
+  `telephone`, `mail`, `work`, `status`, `deviz`, `parties`, `polit_exp`, `female`, `alcohol`, `smoking`, `religions`,
+   `stage`, `state`,`exam_pass`,  `pass`) VALUES 
+
+('3', 'Max', 'Max1', 'Max2', 'Max3', 'MaxBurg', 
+'8-123-123-45-63', 'Max@game.ru', 'ИТ компания3', 'рабочий3', 'В чем счастье - в жизненном пути! Куда твой "долг" велит - идти, "врагов" не знать, преград не мерить, любить!., надеяться! и "верить"', 'нет3', 'нет3', false, true, false, 'православие3', 
+2, 0, null, '81dc9bdb52d04dc20036dbd8313ed055'),
+
+('4', 'Lisa', 'Lisa1', 'Lisa2', 'Lisa3', 'LisaBurg', 
+'8-123-123-45-64', 'Lisa@game.ru', 'ИТ компания4', 'рабочий4', 'любовь, мир, жвачка4', 'нет4', 'нет4', true, false, false, 'православие4', 
+3, 0, null, '81dc9bdb52d04dc20036dbd8313ed055'),
+
+('5', 'John', 'John1', 'John2', 'John3', 'JohnBurg', 
+'8-123-123-45-65', 'John@game.ru', 'ИТ компания5', 'рабочий5', 'любовь, мир, жвачка5', 'нет5', 'нет5', false, true, false, 'православие5', 
+4, 0, null, '81dc9bdb52d04dc20036dbd8313ed055'),
+
+('6', 'Doug', 'Doug1', 'Doug2', 'Doug3', 'DougBurg', 
+'8-123-123-45-66', 'Doug@game.ru', 'ИТ компания6', 'рабочий6', 'любовь, мир, жвачка6', 'нет6', 'нет6', false, true, false, 'православие6', 
+5, 0, null, '81dc9bdb52d04dc20036dbd8313ed055')
+
+,(NULL, 'd1', 'd1', 'd1', 'd1', 'd1', 'd1', 'd1@', 'd1', 'd1', 'd1', 'd1', 'd1', '1', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd2', 'd1', 'd1', 'd1', 'd1', 'd1', 'd2@', 'd1', 'd1', 'd1', 'd1', 'd1', '0', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd3', 'd1', 'd1', 'd1', 'd1', 'd1', 'd3@', 'd1', 'd1', 'd1', 'd1', 'd1', '1', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd4', 'd1', 'd1', 'd1', 'd1', 'd1', 'd4@', 'd1', 'd1', 'd1', 'd1', 'd1', '0', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd5', 'd1', 'd1', 'd1', 'd1', 'd1', 'd5@', 'd1', 'd1', 'd1', 'd1', 'd1', '1', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd6', 'd1', 'd1', 'd1', 'd1', 'd1', 'd6@', 'd1', 'd1', 'd1', 'd1', 'd1', '0', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd7', 'd1', 'd1', 'd1', 'd1', 'd1', 'd7@', 'd1', 'd1', 'd1', 'd1', 'd1', '1', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd8', 'd1', 'd1', 'd1', 'd1', 'd1', 'd8@', 'd1', 'd1', 'd1', 'd1', 'd1', '0', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd9', 'd1', 'd1', 'd1', 'd1', 'd1', 'd9@', 'd1', 'd1', 'd1', 'd1', 'd1', '1', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055')
+,(NULL, 'd10', 'd1', 'd1', 'd1', 'd1', 'd1', 'd10@', 'd1', 'd1', 'd1', 'd1', 'd1', '0', '1', '1', 'd1', '28', '0', NULL, '81dc9bdb52d04dc20036dbd8313ed055');
+
+
+INSERT INTO `politician`.`users_history` (`id`, `stage`, `score`, `id_user`, `msg`) VALUES
+('1', '1', 7, '3', 'заказ изменен'),
+('2', '2', 9, '3', 'заказ изменен'),
+('3', '3', 5, '3', 'заказ изменен'),
+('4', '1', 6, '4', 'заказ изменен'),
+('5', '2', 7, '4', 'заказ изменен'),
+('6', '1', 8, '5', 'заказ изменен'),
+('7', '2', 4, '5', 'заказ изменен'),
+('8', '3', 3, '5', 'заказ изменен'),
+('9', '1', 4, '6', 'заказ изменен'),
+('10', '2', 5, '6', 'заказ изменен'),
+('11', '3', 6, '6', 'заказ изменен'),
+('12', '4', 4, '6', 'заказ изменен');
+
+-- SELECT t.`id`, t.`id_hasp`,  g.`name` AS `группа` ,  t.`address` , t.`name`, 
+-- p.id AS `id параметра`, p.name AS `имя параметра`, p.path AS `путь параметра` ,tp.value AS `значение параметра`, 
+-- tp.last_edit_date, tp.save_date
+-- FROM terminal_archive.terminals AS t
+-- LEFT JOIN terminal_archive.terminal_groups AS tg ON t.id = tg.id_terminal
+-- LEFT JOIN terminal_archive.groups AS g ON tg.id_group = g.id
+-- LEFT JOIN terminal_archive.terminal_parameters AS tp ON t.id = tp.id_terminal
+-- LEFT JOIN terminal_archive.parameters AS p ON tp.id_parameter = p.id
+-- /*WHERE tp.save_date < tp.last_edit_date*/
+-- ORDER BY t.id desc;
+
+-- SELECT o.`id`, s.name AS `состояние`,  t.`name` AS `терминал` ,  `RNN` , d.description AS `доп. параметр`, od.value AS `значение`,
+-- f.`name` AS `топливо` , p.`name` AS `оплата` , o.id_pump AS `колонка`,  
+-- `pre_price` ,  `price` ,  `pre_quantity` ,  `quantity` ,  `pre_summ` ,  `summ` FROM terminal_archive.orders AS o
+-- LEFT JOIN terminal_archive.order_fuels AS f ON o.id_fuel = f.id
+-- LEFT JOIN terminal_archive.order_payment_types AS p ON o.id_payment = p.id
+-- LEFT JOIN terminal_archive.terminals AS t ON o.id_terminal = t.id
+-- LEFT JOIN terminal_archive.order_states AS s ON o.id_state = s.id
+-- LEFT JOIN terminal_archive.order_details AS od ON o.id = od.id_order
+-- LEFT JOIN terminal_archive.details AS d ON od.id_detail = d.id
+-- /*WHERE t.id = 1*/
+-- ORDER BY o.id desc
+-- LIMIT 20;
+
+-- SELECT t.`id`, t.`id_hasp`,  g.`name` AS `группа` ,  t.`address` , t.`name`, 
+-- p.id AS `id параметра`, p.name AS `имя параметра` ,p.path AS `путь параметра`, tp.value AS `значение параметра`, 
+-- tp.last_edit_date, tp.save_date
+-- FROM terminal_archive.terminals AS t
+-- LEFT JOIN terminal_archive.terminal_groups AS tg ON t.id = tg.id_terminal
+-- LEFT JOIN terminal_archive.groups AS g ON tg.id_group = g.id
+-- LEFT JOIN terminal_archive.terminal_parameters AS tp ON t.id = tp.id_terminal
+-- LEFT JOIN terminal_archive.parameters AS p ON tp.id_parameter = p.id
+-- /*WHERE tp.save_date < tp.last_edit_date AND t.hasp_id='1'*/
+-- ORDER BY t.id asc;  

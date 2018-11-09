@@ -1,0 +1,193 @@
+﻿@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        @RenderBody()
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />*@
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                @Html.ActionLink("'Я политик' - администрирование", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @Html.Action("Menu", "Nav")
+                </ul>
+                @{
+                    if (User != null && User.Identity != null)
+                    {
+                        ViewBag.User = User.Identity.Name;
+                    }
+                    //ViewBag.IsAdmin = DbHelper.UserIsAdmin(User?.Identity?.Name);
+                }
+
+                @if (!string.IsNullOrWhiteSpace(ViewBag.User))
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@ViewBag.User</li>
+                            @*<li>
+                                @Html.ActionLink("Сменить пароль", "ChangePassword", "Account")
+                            </li>*@
+                            <li>
+                                @Html.ActionLink("Выйти", "SignOut", "Account")
+                            </li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                }
+
+            </div>
+        </div>
+    </div>
+    @*<div class="navbar navbar-inverse col-md-10" role="navigation">
+            <a class="navbar-brand" href="#">Terminal archive - мониторинг бензо терминалов! </a>
+            @{
+                ViewBag.User = User?.Identity?.Name;
+                ViewBag.IsAdmin = DbHelper.UserIsAdmin(User?.Identity?.Name);
+            }
+            @using (Html.BeginForm("Logout", "Account"))
+            {
+                if (!string.IsNullOrWhiteSpace(ViewBag.User))
+                {
+                    <div class="form-group">
+                        Вы вошли как: @ViewBag.User
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Сменить пароль" class="btn btn-default" name="submitButton" />
+                        </div>
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Выйти" class="btn btn-default" name="submitButton"/>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        Для просмотра информации - авторизуйтесь!
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.RouteLink("Войти", new
+                            {
+                                controller = "Account",
+                                action = "Login"
+                            })
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row panel col-md-10" >
+            <div id="categories" class="col-md-2">
+                @Html.Action("Menu", "Nav")
+            </div>
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>*@
+    <div class="container body-content">
+        <div>
+            <div class="panel">
+                <div class="panel-body">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; @DateTime.Now.Year – Региональный центр патриотического воспитания</p>
+        </footer>
+    </div>
+
+
+
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <hr />
+            <footer>
+                <p>© @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>*@
+
+
+
+
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
+
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
+</body>
+</html>

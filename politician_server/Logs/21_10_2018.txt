@@ -1,0 +1,16 @@
+[10/21/2018 21:28:36] - User = System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в politician_server.Controllers.UsersController.GetUser(String name) в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 168 +++ [   в politician_server.Controllers.UsersController.GetUser(String name) в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 168]
+[10/21/2018 22:47:13] - MailConfirm = System.FormatException: Форма указанной строки не годится для адреса электронной почты.
+   в System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   в System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   в System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   в System.Net.Mail.MailAddressParser.ParseAddress(String data)
+   в System.Net.Mail.MailAddress..ctor(String address, String displayName, Encoding displayNameEncoding)
+   в System.Net.Mail.MailAddress..ctor(String address)
+   в politician_server.Controllers.UsersController.MailConfirm(String name) в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 78 +++ [   в System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   в System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   в System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   в System.Net.Mail.MailAddressParser.ParseAddress(String data)
+   в System.Net.Mail.MailAddress..ctor(String address, String displayName, Encoding displayNameEncoding)
+   в System.Net.Mail.MailAddress..ctor(String address)
+   в politician_server.Controllers.UsersController.MailConfirm(String name) в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 78]

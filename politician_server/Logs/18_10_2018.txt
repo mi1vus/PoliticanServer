@@ -1,0 +1,11 @@
+[10.18.2018 17:35:48] - User = System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в politician_server.Controllers.UsersController.GetUser(String name) в E:\DropboxFolder\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 105 +++ [   в politician_server.Controllers.UsersController.GetUser(String name) в E:\DropboxFolder\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 105]
+[10.18.2018 20:04:51] - ERROR +++ [Test]
+[10/18/2018 22:59:49] - MailConfirm = System.Net.Mail.SmtpException: Время ожидания операции истекло.
+   в System.Net.Mail.SmtpClient.Send(MailMessage message)
+   в politician_server.Controllers.UsersController.MailConfirm() в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 88 +++ [   в System.Net.Mail.SmtpClient.Send(MailMessage message)
+   в politician_server.Controllers.UsersController.MailConfirm() в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 88]
+[10/18/2018 23:00:43] - MailConfirm = System.Net.Mail.SmtpException: Время ожидания операции истекло.
+   в System.Net.Mail.SmtpClient.Send(MailMessage message)
+   в politician_server.Controllers.UsersController.MailConfirm() в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 88 +++ [   в System.Net.Mail.SmtpClient.Send(MailMessage message)
+   в politician_server.Controllers.UsersController.MailConfirm() в D:\Projects\Dropbox (Личный)\Dropbox (Личный)\Proj\Polit_GAME\Politician_server\politician_server\Controllers\UsersController.cs:строка 88]
