@@ -6,7 +6,6 @@ namespace politician_server.Controllers
 {
     public class NavController : Controller
     {
-        [Authorize]
         public PartialViewResult Menu()
         {
             //var admin = DbHelper.UserIsAdmin(User?.Identity?.Name);

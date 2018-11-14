@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Net.Mail;
+using System.IO;
 using DBHelper.Models;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -360,7 +361,7 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
                     if (System.IO.File.Exists(Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName)) &&
                         System.IO.File.Exists(Server.MapPath("~/Backup/" + user + "/" + stage + "/" + fileName)))
                     {
-                        result = DBHelper.Db.AddFile(user, stage, fileName, Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName).Replace("/", "|"), true);
+                        result = DBHelper.Db.AddFile(user, stage, fileName, Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName), true);
                     }
                 }
                 else
@@ -374,6 +375,52 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
             }
 
             return Json(result);
+        }
+
+        // DELETE api/values/5
+        public string AddTextFile(string user, int stage, string fileName, string text)
+        {
+            var result = false;
+            try
+            {
+                    if (!System.IO.Directory.Exists(Server.MapPath("~/Files/")))
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/Files/"));
+                    if (!System.IO.Directory.Exists(Server.MapPath("~/Backup/")))
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/Backup/"));
+
+                    if (!System.IO.Directory.Exists(Server.MapPath("~/Files/" + user + "/")))
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/Files/" + user + "/"));
+                    if (!System.IO.Directory.Exists(Server.MapPath("~/Files/" + user + "/" + stage + "/")))
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/Files/" + user + "/" + stage + "/"));
+
+                    if (!System.IO.Directory.Exists(Server.MapPath("~/Backup/" + user + "/")))
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/Backup/" + user + "/"));
+                    if (!System.IO.Directory.Exists(Server.MapPath("~/Backup/" + user + "/" + stage + "/")))
+                        System.IO.Directory.CreateDirectory(Server.MapPath("~/Backup/" + user + "/" + stage + "/"));
+
+                    // Create a file to write to.
+                    using (StreamWriter sw = System.IO.File.CreateText(Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName + ".txt")))
+                    {
+                        sw.Write(text);
+                    }
+
+                    using (StreamWriter sw = System.IO.File.CreateText(Server.MapPath("~/Backup/" + user + "/" + stage + "/" + fileName + ".txt")))
+                    {
+                        sw.Write(text);
+                    }
+
+                    if (System.IO.File.Exists(Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName + ".txt")) &&
+                        System.IO.File.Exists(Server.MapPath("~/Backup/" + user + "/" + stage + "/" + fileName + ".txt")))
+                    {
+                        result = DBHelper.Db.AddFile(user, stage, fileName, Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName + ".txt"), true);
+                    }
+            }
+            catch (Exception ex)
+            {
+                LogError("Upload = " + ex.ToString(), ex.StackTrace);
+            }
+
+            return result.ToString();
         }
 
         public string SetExamStage(string nick, int stage)
