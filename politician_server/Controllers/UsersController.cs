@@ -412,7 +412,7 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
                     if (System.IO.File.Exists(Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName + ".txt")) &&
                         System.IO.File.Exists(Server.MapPath("~/Backup/" + user + "/" + stage + "/" + fileName + ".txt")))
                     {
-                        result = DBHelper.Db.AddFile(user, stage, fileName, Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName + ".txt"), true);
+                        result = DBHelper.Db.AddFile(user, stage, fileName + ".txt", Server.MapPath("~/Files/" + user + "/" + stage + "/" + fileName + ".txt"), true);
                     }
             }
             catch (Exception ex)
