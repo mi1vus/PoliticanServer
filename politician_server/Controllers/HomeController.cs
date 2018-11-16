@@ -294,5 +294,11 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
+        public ActionResult DownloadWin_32_64_Client()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/Files/Client/I_am_a_politician.rar"));
+            string fileName = "I_am_a_politician.rar";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
     }
 }
