@@ -94,7 +94,7 @@ $"<a href={url} target=\"_blank\"> {url}</a><br><br><br>" +
 "Если вы забыли ваш пароль, то можете сменить его по ссылке:" +
 $"<a href={urlMailChange} target=\"_blank\"> {urlMailChange}</a><br><br><br>" +
 $"Если вы хотите отказаться от регистрации, то пройдите по ссылке" +
-$"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
+$"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a><br>" +
 "Внимание. Не направляйте сообщения на адрес отправки данного уведомления –<br>" +
 "любые сообщения на этот адрес будут без рассмотрения автоматически удалены.<br>";
 
@@ -147,6 +147,84 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
                 LogError("MailConfirm = " + ex.ToString(), ex.StackTrace);
             }
             return result.ToString();
+        }
+
+        public static bool MailNotifyNewStage(string name, string pass)
+        {
+            bool result = false;
+
+            try
+            {
+                var user = DBHelper.Db.GetUser(name);
+                var levels = DBHelper.Db.GetLevels(name);
+
+                if (user == null || user.ExamPass != pass)
+                    throw new Exception("user is null");
+
+                //var url = webServerUrl + $"/Home/MailConfirm?nick={user.Nick}&examPass={user.ExamPass}";
+                var urlMailChange = webServerUrl + $"/Home/MailChange?nick={user.Nick}&examPass={user.ExamPass}";
+                var urlUnsubscribe = webServerUrl + $"/Home/UserDelete?nick={user.Nick}&examPass={user.ExamPass}";
+
+                // текст письма
+                var body =
+"<h2>Ваше задание проверено, вы перешли на новый уровень в игре 'Я политик'.</h2><br><br><br>" +
+$"Вы зарегистрировались в игре 'Я политик' под псевдонимом '{user.Nick}' и отправили материалы по заданию №{user.Stage - 1} на проверку. " +
+$"Задание было проверено! Вы получили за {user.Stage - 1} задание - {levels.FirstOrDefault(t => t.Number == user.Stage - 1)?.Score} баллов. " +
+$"Если вы хотите отказаться от регистрации, то пройдите по ссылке" +
+$"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a><br>" +
+"Внимание. Не направляйте сообщения на адрес отправки данного уведомления –<br>" +
+"любые сообщения на этот адрес будут без рассмотрения автоматически удалены.<br>";
+
+                /*                RestClient client = new RestClient();
+                                client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+                                client.Authenticator =
+                                    new HttpBasicAuthenticator("api", "697f4571bedacca9e7e965de6c11efd1-c9270c97-bcb2f4f5");
+                                RestRequest request = new RestRequest();
+                                request.AddParameter("domain", "sandbox6c86115741e54bf6b203eec3defeee47.mailgun.org", ParameterType.UrlSegment);
+                                request.Resource = "{domain}/messages";
+                                request.AddParameter("from", "IamaPolitician <postmaster@sandbox6c86115741e54bf6b203eec3defeee47.mailgun.org>");
+                                request.AddParameter("to", $@"<{user.Mail}>");
+                                request.AddParameter("subject", "IamaPolitician - подтверждение почты");
+                                request.AddParameter("text", body);
+                                request.Method = Method.POST;
+                                var r = client.Execute(request); 
+                 */
+
+
+                // отправитель - устанавливаем адрес и отображаемое в письме имя
+                MailAddress from = new MailAddress("IamaPolitician@yandex.ru", "IamaPolitician");
+                // кому отправляем
+                MailAddress to = new MailAddress(user.Mail);
+                //MailAddress to = new MailAddress("test @allaboutspam.com");
+
+                // создаем объект сообщения
+                MailMessage m = new MailMessage(from, to);
+
+                m.Headers.Add("Precedence", "bulk");
+                m.Headers.Add("List-Unsubscribe", $"<{urlUnsubscribe}>");
+
+                // тема письма
+                m.Subject = "IamaPolitician - проверка задания окончена";
+
+                m.Body = body;
+
+                // письмо представляет код html
+                m.IsBodyHtml = true;
+                // адрес smtp-сервера и порт, с которого будем отправлять письмо
+                SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 25);// 465);
+                                                                       // логин и пароль
+                smtp.EnableSsl = true;
+                smtp.Credentials = new NetworkCredential("IamaPolitician", "ae05d656fdcdc7e1c94870da2599d5ea");
+                smtp.EnableSsl = true;
+                smtp.Send(m);
+                result = true;//r.StatusCode == HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                //LogError("MailConfirm = " + ex.ToString(), ex.StackTrace);
+                return false;
+            }
+            return result;
         }
 
         public string Ping() {

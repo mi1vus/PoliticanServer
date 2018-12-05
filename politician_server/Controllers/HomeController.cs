@@ -277,6 +277,8 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
             if (!DBHelper.Db.EndExamStage(nick, user.Stage, score, user.ExamPass, comment))
                 return View("Error");
 
+            var res = UsersController.MailNotifyNewStage(nick, user.ExamPass );
+
             return View("Saved");
         }
 
@@ -300,5 +302,7 @@ $"<a href={urlUnsubscribe} target=\"_blank\"> {urlUnsubscribe}</a>" +
             string fileName = "I_am_a_politician.rar";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+
+
     }
 }
