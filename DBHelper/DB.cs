@@ -818,7 +818,7 @@ namespace DBHelper
             {
                 string sql = string.Format(
 @" SELECT 
- `u`.`id`, `u`.`nickname`, `u`.`female`, `u`.`fname`, `u`.`lname`, `u`.`midname`, `u`.`city`, `u`.`mail`, `u`.`stage`, `u`.`state`, `u`.`reward`
+ `u`.`id`, `u`.`nickname`, `u`.`female`, `u`.`fname`, `u`.`lname`, `u`.`midname`, `u`.`city`, `u`.`mail`, `u`.`telephone`, `u`.`stage`, `u`.`state`, `u`.`reward`
  FROM `{0}`.`users_rating` AS u;  ", DB);
 
                 if (contextConn == null)
@@ -838,10 +838,11 @@ namespace DBHelper
                     us.Midname = dataReader.GetString(5);
                     us.City = dataReader.GetString(6);
                     us.Mail = dataReader.GetString(7);
-                    us.Stage = dataReader.GetInt32(8);
-                    us.State = (TaskStates)dataReader.GetInt32(9);
-                    if (!dataReader.IsDBNull(10))
-                        us.Score = dataReader.GetInt32(10);
+                    us.Telephone = dataReader.GetString(8);
+                    us.Stage = dataReader.GetInt32(9);
+                    us.State = (TaskStates)dataReader.GetInt32(10);
+                    if (!dataReader.IsDBNull(11))
+                        us.Score = dataReader.GetInt32(11);
                     result.Add(us);
                 }
                 dataReader.Close();

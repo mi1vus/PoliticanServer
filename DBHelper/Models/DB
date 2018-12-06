@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS  `politician`.`users_files` (
 );
 
 CREATE VIEW `politician`.`users_rating` AS
-select `u`.`id`, `u`.`nickname`, `u`.`female`, `u`.`fname`, `u`.`lname`, `u`.`midname`, `u`.`city`, `u`.`mail`, `u`.`stage`, `u`.`state`, sum(`score`) `reward`
+select `u`.`id`, `u`.`nickname`, `u`.`female`, `u`.`fname`, `u`.`lname`, `u`.`midname`, `u`.`city`, `u`.`mail`, `u`.`telephone`, `u`.`stage`, `u`.`state`, sum(`score`) `reward`
 from `politician`.`users` AS `u`
 left Join `politician`.`users_history` AS `h` ON `u`.`id` = `h`.`id_user`
 group by `u`.`id`

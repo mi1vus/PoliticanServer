@@ -9,17 +9,17 @@
 <h2>Игроки 2</h2>
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 <table class="table table-striped">
     <thead>
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.GroupsIdsString)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GroupsNamesString)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.GroupsIdsString)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GroupsNamesString)
+                </th>*@
             <th>
                 Уровень
             </th>
@@ -36,41 +36,41 @@
                 Отчество
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telephone)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.City)
+                </th>*@
             <th>
                 Почта
             </th>
+            <th>
+                Телефон
+            </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Work)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Deviz)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Parties)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PolitExp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Alcohol)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Smoking)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Religions)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamPass)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Work)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Deviz)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Parties)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PolitExp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Alcohol)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Smoking)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Religions)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExamPass)
+                </th>*@
             <th>
                 Прогресс
             </th>
@@ -129,6 +129,7 @@
                 <th> </th>
                 <th> </th>
                 <th> </th>
+                <th> </th>
                 <th>
                     @Html.Hidden("page", @Model.PagingInfo.CurrentPage)
                     @Html.DropDownList("FilterUserState", new SelectList((IEnumerable<Stage>)ViewBag.TaskStatesAll, "Id", "Name", "None"), new { @class = "form-control-ui-autocomplete-input" })
@@ -142,81 +143,81 @@
 
         @foreach (var item in Model.Users)
         {
-        <tr>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.GroupsIdsString)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GroupsNamesString)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Stage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nick)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Midname)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telephone)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Mail)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.Work)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Deviz)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Parties)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PolitExp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Alcohol)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Smoking)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Religions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExamPass)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-            <td>
-                @if(item.State == DBHelper.Models.TaskStates.Проверка && item.Stage > 0)
-                {
-                    @Html.ActionLink("Начать проверку", "Exam", new { nick = item.Nick }) 
-                }
-                @*
-                                                                                           |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-            </td>
-        </tr>
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.GroupsIdsString)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GroupsNamesString)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nick)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Midname)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Work)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Deviz)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Parties)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PolitExp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Alcohol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Smoking)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Religions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExamPass)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Score)
+                </td>
+                <td>
+                    @if (item.State == DBHelper.Models.TaskStates.Проверка && item.Stage > 0)
+                    {
+                        @Html.ActionLink("Начать проверку", "Exam", new { nick = item.Nick })
+                    }
+                    @*
+                                                                                                   |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                </td>
+            </tr>
         }
     </tbody>
 </table>
